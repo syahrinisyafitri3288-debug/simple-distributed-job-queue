@@ -81,9 +81,14 @@ func main() {
 	)
 	e.Echo.GET("/graphiql", handler.GraphiQLHandler)
 
-	helloHandler := _htmx.NewHelloHandler()
-	e.Echo.GET("/jobqueue/dashboard", helloHandler.Page)
-	e.Echo.GET("/jobqueue/dashboard/message", helloHandler.Message)
+dashboardHandler := _htmx.NewDashboardHandler(jobService)
+	e.Echo.GET("/jobqueue/dashboard", dashboardHandler.Page)
+	e.Echo.GET("/jobqueue/dashboard/message", dashboardHandler.Message)
+	e.Echo.POST("/jobqueue/dashboard/jobs/create", dashboardHandler.CreateJobs)
+	e.Echo.POST("/jobqueue/dashboard/jobs/unstable", dashboardHandler.UnstableJob)
+	e.Echo.GET("/jobqueue/dashboard/status", dashboardHandler.Status)
+	e.Echo.GET("/jobqueue/dashboard/jobs", dashboardHandler.Jobs)
+	e.Echo.GET("/jobqueue/dashboard/jobs/:id", dashboardHandler.JobDetail)
 
 	e.Echo.Logger.Fatal(e.Start())
 }

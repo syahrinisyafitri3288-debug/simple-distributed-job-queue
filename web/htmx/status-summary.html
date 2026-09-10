@@ -1,0 +1,7 @@
+<div id="status-summary" class="status-badges"
+     hx-get="/jobqueue/dashboard/status" hx-trigger="every 2s" hx-swap="outerHTML">
+  <span>Pending: {{.Pending}}</span>
+  <span>Running: {{.Running}}</span>
+  <span>Failed: {{.Failed}}</span>
+  <span>Completed: {{.Completed}}</span>
+</div>

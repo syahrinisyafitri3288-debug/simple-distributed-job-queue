@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Queue Dashboard</title>
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
+    .status-badges span { display: inline-block; padding: 4px 10px; margin-right: 8px; border-radius: 4px; background: #eee; }
+    form { display: inline-block; margin-right: 1rem; }
+    input { margin: 2px; }
+  </style>
+</head>
+<body>
+  <h1>Job Queue Dashboard</h1>
+  <div id="dashboard-root" hx-get="/jobqueue/dashboard/message" hx-trigger="load" hx-swap="innerHTML">
+    Loading dashboard...
+  </div>
+</body>
+</html>

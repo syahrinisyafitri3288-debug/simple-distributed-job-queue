@@ -13,20 +13,45 @@ type JobQuery struct {
 }
 
 func (q JobQuery) Jobs(ctx context.Context) ([]resolver.JobResolver, error) {
-	resolvers := make([]resolver.JobResolver, 0)
+	jobs, err := q.jobService.GetAllJobs(ctx)
+	if err != nil {
+		return nil, err
+	}
+	resolvers := make([]resolver.JobResolver, 0, len(jobs))
+	for _, j := range jobs {
+		resolvers = append(resolvers, resolver.JobResolver{
+			Data:       *j,
+			JobService: q.jobService,
+			Dataloader: q.dataloader,
+		})
+	}
 	return resolvers, nil
 }
 
 func (q JobQuery) Job(ctx context.Context, args struct {
 	ID string
 }) (*resolver.JobResolver, error) {
-	resolver := resolver.JobResolver{}
-	return &resolver, nil
+	job, err := q.jobService.GetJobById(ctx, args.ID)
+	if err != nil {
+		return nil, nil
+	}
+	return &resolver.JobResolver{
+		Data:       *job,
+		JobService: q.jobService,
+		Dataloader: q.dataloader,
+	}, nil
 }
 
 func (q JobQuery) JobStatus(ctx context.Context) (resolver.JobStatusResolver, error) {
-	resolver := resolver.JobStatusResolver{}
-	return resolver, nil
+	stats, err := q.jobService.GetAllJobStatus(ctx)
+	if err != nil {
+		return resolver.JobStatusResolver{}, err
+	}
+	return resolver.JobStatusResolver{
+		Data:       *stats,
+		JobService: q.jobService,
+		Dataloader: q.dataloader,
+	}, nil
 }
 
 func NewJobQuery(jobService _interface.JobService,

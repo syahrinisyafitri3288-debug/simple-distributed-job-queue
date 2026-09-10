@@ -1,0 +1,32 @@
+<div id="action-bar">
+  <form hx-post="/jobqueue/dashboard/jobs/create" hx-target="#jobs-table" hx-swap="outerHTML">
+    <input type="text" name="job1" value="{{.Job1}}">
+    <input type="text" name="job2" value="{{.Job2}}">
+    <input type="text" name="job3" value="{{.Job3}}">
+    <button type="submit">Create 3 Jobs</button>
+  </form>
+
+  <form hx-post="/jobqueue/dashboard/jobs/unstable" hx-target="#jobs-table" hx-swap="outerHTML">
+    <button type="submit">Create Unstable Job</button>
+  </form>
+
+  <button hx-get="/jobqueue/dashboard/status" hx-target="#status-summary" hx-swap="outerHTML">Refresh</button>
+</div>
+
+<div id="status-summary" class="status-badges"
+     hx-get="/jobqueue/dashboard/status" hx-trigger="every 2s" hx-swap="outerHTML">
+  Loading status...
+</div>
+
+<div id="jobs-table"
+     hx-get="/jobqueue/dashboard/jobs" hx-trigger="every 2s" hx-swap="outerHTML">
+  Loading jobs...
+</div>
+
+<div>
+  <input type="text" id="job-search" placeholder="Type a job ID..."
+         onkeyup="this.setAttribute('hx-get','/jobqueue/dashboard/jobs/'+this.value); htmx.process(this); htmx.trigger(this,'refresh-detail')"
+         hx-get="/jobqueue/dashboard/jobs/" hx-trigger="refresh-detail changed delay:400ms"
+         hx-target="#job-detail" hx-swap="innerHTML">
+</div>
+<div id="job-detail">Select a job to view details.</div>

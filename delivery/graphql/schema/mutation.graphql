@@ -1,4 +1,10 @@
 type Mutation {
   # Create New Job
   Enqueue(task: String!): Job!
+
+  # Create 3 jobs concurrently
+  SimultaneousCreateJob(job1: String!, job2: String!, job3: String!): [Job!]!
+
+  # Create a job with task "unstable-job" that fails twice then succeeds
+  SimulateUnstableJob: Job!
 }
