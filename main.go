@@ -81,7 +81,7 @@ func main() {
 	)
 	e.Echo.GET("/graphiql", handler.GraphiQLHandler)
 
-dashboardHandler := _htmx.NewDashboardHandler(jobService)
+	dashboardHandler := _htmx.NewDashboardHandler(jobService)
 	e.Echo.GET("/jobqueue/dashboard", dashboardHandler.Page)
 	e.Echo.GET("/jobqueue/dashboard/message", dashboardHandler.Message)
 	e.Echo.POST("/jobqueue/dashboard/jobs/create", dashboardHandler.CreateJobs)
