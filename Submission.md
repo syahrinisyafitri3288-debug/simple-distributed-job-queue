@@ -4,7 +4,7 @@ File ini berisi rangkuman fitur yang sudah diimplementasikan, cara menjalankan, 
 
 ---
 
-## 🚀 Cara Menjalankan
+## Cara Menjalankan
 
 1. Generate schema GraphQL:
    ```bash
